@@ -31,28 +31,32 @@
   <script>
     // JavaScript code to handle form submission
     document.getElementById("uploadForm").addEventListener("submit", function(event) {
-      event.preventDefault();
-      
+    event.preventDefault();
+  
       const fileInput = document.getElementById("fileInput");
       const resultsDiv = document.getElementById("results");
 
-      // Create a FormData object to send the file
       const formData = new FormData();
       formData.append("file", fileInput.files[0]);
 
-      // Use AJAX to send the FormData to the server
       fetch("/process_file", {
         method: "POST",
         body: formData
       })
-      .then(response => response.text())
-      .then(result => {
-        resultsDiv.innerHTML = "<h3>Processed Results:</h3><pre>" + result + "</pre>";
-      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.error) {
+          resultsDiv.innerHTML = `<div class='alert alert-danger'>Error: ${data.error}</div>`;
+        } else {
+          resultsDiv.innerHTML = "<h3>Processed Results:</h3><pre>" + data.result + "</pre>";
+    }
+  })
       .catch(error => {
         resultsDiv.innerHTML = "<div class='alert alert-danger'>An error occurred: " + error + "</div>";
-      });
-    });
+  });
+});
   </script>
 </body>
 </html>
+
+
