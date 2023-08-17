@@ -33,26 +33,26 @@
     document.getElementById("uploadForm").addEventListener("submit", function(event) {
     event.preventDefault();
   
-      const fileInput = document.getElementById("fileInput");
-      const resultsDiv = document.getElementById("results");
+    const fileInput = document.getElementById("fileInput");
+    const resultsDiv = document.getElementById("results");
 
-      const formData = new FormData();
-      formData.append("file", fileInput.files[0]);
+    const formData = new FormData();
+    formData.append("file", fileInput.files[0]);
 
-      fetch("/process_file", {
+    fetch("/process_file", {
         method: "POST",
         body: formData
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.error) {
-          resultsDiv.innerHTML = `<div class='alert alert-danger'>Error: ${data.error}</div>`;
-        } else {
-          resultsDiv.innerHTML = "<h3>Processed Results:</h3><pre>" + data.result + "</pre>";
+    })
+    .then(response => response.json())
+    .then(data => {
+    if (data.error) {
+        resultsDiv.innerHTML = `<div class='alert alert-danger'>Error: ${data.error}</div>`;
+    } else {
+        resultsDiv.innerHTML = "<h3>Processed Results:</h3><pre>" + data.result + "</pre>";
     }
   })
-      .catch(error => {
-        resultsDiv.innerHTML = "<div class='alert alert-danger'>An error occurred: " + error + "</div>";
+.catch(error => {
+    resultsDiv.innerHTML = "<div class='alert alert-danger'>An error occurred: " + error + "</div>";
   });
 });
   </script>
