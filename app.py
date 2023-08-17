@@ -18,7 +18,7 @@ def process_file():
             uploaded_file.save(file_path)
 
             # Run the Python script
-            script_output = subprocess.check_output(['python', 'your_script.py', file_path], universal_newlines=True)
+            script_output = subprocess.check_output(['python', 'reference_scrape.py', file_path], universal_newlines=True)
 
             return jsonify({'result': script_output})
         else:
